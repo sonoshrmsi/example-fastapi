@@ -1,10 +1,11 @@
 name: Build and Deploy Code
 
 on: [push, pull_request]
+
 jobs:
-  job1:
+  build:
     environment:
-    name: Testing
+      name: Testing
     env:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
       DATABASE_PORT: ${{secrets.DATABASE_PORT}}
@@ -14,9 +15,9 @@ jobs:
       SECRET_KEY: ${{secrets.SECRET_KEY}}
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRE_MINUTES: 60
+
     services:
       postgres:
-        # docker image
         image: postgres
         env:
           POSTGRES_PASSWORD: ${{secrets.DATABASE_PASSWORD}}
@@ -28,18 +29,19 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-
     runs-on: ubuntu-latest
     steps:
-      - name: Pulling git repo
-        uses: actions/checkout@v3.3.0
-      - name: Install Python
-        uses: actions/setup-python@v4.5.0
+      - name: pulling git repo
+        uses: actions/checkout@v2
+      - name: Install python version 3.9
+        uses: actions/setup-python@v2
         with:
           python-version: "3.9"
-      - name: upgrade pip
-        run: python3 -m pip install --upgrade pip
-      - name: Install all dependencies
-        run: pip3 install -r requirements.txt
-      - name: Running Unit-test
-        run: pytest
+      - name: update pip
+        run: python -m pip install --upgrade pip
+      - name: install all dependencies
+        run: pip install -r requirements.txt
+      - name: test with pytest
+        run: |
+          pip install pytest
+          pytest
