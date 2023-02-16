@@ -3,9 +3,9 @@ name: Build and Deploy Code
 on: [push, pull_request]
 
 jobs:
-  build:
-    environment:
-      name: testing
+  job1:
+  environment:
+    name: Testing
     env:
       DATABASE_HOSTNAME: ${{secrets.DATABASE_HOSTNAME}}
       DATABASE_PORT: ${{secrets.DATABASE_PORT}}
@@ -28,6 +28,4 @@ jobs:
       - name: Install all dependencies
         run: pip3 install -r requirements.txt
       - name: Running Unit-test
-        run: |
-          pip3 install pytest
-          pytest
+        run: pytest
