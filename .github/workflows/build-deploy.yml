@@ -12,5 +12,11 @@ jobs:
     steps:
       - name: Pulling git repo
         uses: actions/checkout@v3.3.0
-      - name: Say hi to Shahryar
-        run: echo "Hello Shahryar"
+      - name: Install Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-vesion: "3.9"
+      - name: upgrade pip
+        run: python3 -m pip install --upgrade pip
+      - name: Install all dependencies
+        run: pip3 install -r requirements.txt
