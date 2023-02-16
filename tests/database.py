@@ -9,8 +9,7 @@ from app.config import settings
 from app.database import get_db, Base
 
 # Create database for test
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:0014031681@localhost:5432/fastapi_test"
-
+SQLALCHEMY_DATABASE_URL = f'postgresql://{settings.DATABASE_USERNAME}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOSTNAME}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}_test'
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 
